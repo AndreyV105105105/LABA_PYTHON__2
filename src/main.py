@@ -1,20 +1,31 @@
-from src.power import power_function
-from src.constants import SAMPLE_CONSTANT
+import logging
+import shlex
+from pathlib import Path
+from src.loggins import setup_logging
+from src.necessary_functions import find_necessary_command
 
 
-def main() -> None:
-    """
-    Обязательнная составляющая программ, которые сдаются. Является точкой входа в приложение
-    :return: Данная функция ничего не возвращает
-    """
 
-    target, degree = map(int, input("Введите два числа разделенные пробелом: ").split(" "))
+def main():
+    setup_logging()
+    try:
+        logging.info('START PROGRAM')
+        while True:
+            user_message = input(f'{Path.cwd()} ') # FIX
+            logging.info(f'USER MESSAGE: {user_message}')
 
-    result = power_function(target=target, power=degree)
+            if user_message.lower() == 'exit':
+                break
 
-    print(result)
+            user_message = shlex.split(user_message)
 
-    print(SAMPLE_CONSTANT)
+            find_necessary_command(user_message)
 
+        logging.info('END PROGRAM')
+    except KeyboardInterrupt:
+        logging.info('END PROGRAM')
+    except Exception as err:
+        logging.error(err)
+            
 if __name__ == "__main__":
     main()
