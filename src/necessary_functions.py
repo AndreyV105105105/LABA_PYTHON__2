@@ -1,6 +1,7 @@
 import logging
 
 from src.file_commands.ls_command import command_ls
+from src.file_commands.cd_command import command_cd
 
 
 def find_necessary_command(user_message):
@@ -49,7 +50,17 @@ def find_necessary_command(user_message):
                 return True
 
             elif user_message[0] == 'cd':
-                pass
+                directory_path = None
+                for cd_path in user_message[1:]:
+                    if directory_path is None:
+                        directory_path = cd_path
+                    else:
+                        logging.error('too many arguments')
+                        print('Ты ввёл слишком много аргументов')
+                        continue
+                command_cd(directory_path)
+
+
             elif user_message[0] == 'cat':
                 pass
             elif user_message[0] == 'cp':

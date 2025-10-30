@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 from src.file_features import get_file_size, get_file_time, get_file_permissions
-
+import os
 
 def command_ls(directory_path=None, full_version=False):
     try:
@@ -9,7 +9,7 @@ def command_ls(directory_path=None, full_version=False):
         if directory_path:
             directory_path = Path(directory_path).resolve()
         else:
-            directory_path = Path('.').resolve() # FIX
+            directory_path = Path(os.getcwd()).resolve()
 
         """Если введённый пользователем путь - не папка"""
         if not directory_path.is_dir():
@@ -30,7 +30,7 @@ def command_ls(directory_path=None, full_version=False):
 
                 else:
                     logging.error(f"cannot access {str(directory_path)}: No such file or directory")
-                    print('Введённый вами путь не файл или директория')
+                    print('Введённый вами путь - не файл или директория')
                     return False
             else:
                 logging.error(f"ls: cannot access {str(directory_path)}: No such file or directory")
