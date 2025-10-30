@@ -1,5 +1,6 @@
 import logging
 
+from src.file_commands.cat_command import command_cat
 from src.file_commands.ls_command import command_ls
 from src.file_commands.cd_command import command_cd
 
@@ -59,10 +60,36 @@ def find_necessary_command(user_message):
                         print('Ты ввёл слишком много аргументов')
                         continue
                 command_cd(directory_path)
+                return True
 
 
             elif user_message[0] == 'cat':
-                pass
+                directory_paths = None
+                """Обрабатываем аргументы функции"""
+                for cat_path in user_message[1:]:
+                    if directory_paths is None:
+                        directory_paths = [cat_path]
+                    else:
+                        directory_paths.append(cat_path)
+
+                cat_path_answers = []
+                if directory_paths is not None:
+                    for directory_path in directory_paths:
+                        cat_answer = command_cat(directory_path)
+                        if cat_answer:
+                            cat_path_answers.append(cat_answer)  # для каждого аргумента вызываем ф-ию
+                else:
+                    logging.error('no many arguments')
+                    print('Ты не ввёл аргументы')
+
+
+                """Выводим результат"""
+                if cat_path_answers:
+                    for path in cat_path_answers:
+                        print(path)
+
+                return True
+
             elif user_message[0] == 'cp':
                 pass
             elif user_message[0] == 'mv':
