@@ -6,14 +6,12 @@ from src.auxilary_functions.cd import cd
 from src.auxilary_functions.cat import cat
 from src.auxilary_functions.cp import cp
 from src.auxilary_functions.mv import mv
+from src.auxilary_functions.rm import rm
 
 
 def find_command(user_message):
     """Функция для обработки команд введённых пользователем"""
     if user_message: # Проверяем, что не пустая строка
-
-        """Обработка команды ls
-        В зависимости от введённых пользователем доп. аргументов по разному вызываем функцию"""
         try:
             if user_message[0] == 'ls':
                 ls(user_message[1:])
@@ -26,7 +24,7 @@ def find_command(user_message):
             elif user_message[0] == 'mv':
                 mv(user_message[1:])
             elif user_message[0] == 'rm':
-                pass
+                rm(user_message[1:])
             else:
                 print('Введена неизвестная команда')
                 return False

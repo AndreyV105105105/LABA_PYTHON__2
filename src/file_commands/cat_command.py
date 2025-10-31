@@ -1,7 +1,5 @@
 import logging
 from pathlib import Path
-import os
-
 
 def command_cat(directory_path):
     try:
