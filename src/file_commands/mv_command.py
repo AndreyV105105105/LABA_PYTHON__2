@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 import shutil
 
-def command_cp(paths, recurs_version=None):
+def command_mv(paths):
     try:
         paths = list(map(lambda x: Path(x).resolve(), paths))
         if len(paths) == 1:
@@ -19,24 +19,20 @@ def command_cp(paths, recurs_version=None):
                 logging.error(f"cannot stat '{str(paths[1])}': No such directory")
                 return False
             if paths[0] == paths[1]:
-                print('Нельзя скопировать в самого себя')
-                logging.error(f"cannot copy a directory, '{str(paths[0])}', into itself, '{str(paths[0])}/"
+                print('Нельзя переместить в самого себя')
+                logging.error(f"cannot move a directory, '{str(paths[0])}', into itself, '{str(paths[0])}/"
                               f"{str(paths[0])}'")
                 return False
             try:
                 destination_path = paths[1]
                 dispatch_path = paths[0]
-                if dispatch_path.is_file():
-                    shutil.copy2(dispatch_path, destination_path)
-                    return True
+                if destination_path.is_file() and dispatch_path.is_dir():
+                    print('Нельзя переместить директорию в файл')
+                    logging.error(f"cannot move a directory, '{str(paths[0])}', into file, '{str(paths[0])}'")
+                    return False
 
-                elif dispatch_path.is_dir():
-                    if not recurs_version:
-                        print(f"Неуказан -r для копирования директории'{dispatch_path}'")
-                        logging.error(f"-r not specified; omitting directory '{dispatch_path}'")
-                        return False
-                    shutil.copytree(dispatch_path, destination_path)
-                    return True
+                shutil.move(dispatch_path, destination_path)
+                return True
 
             except Exception as err:
                 logging.error(err)
@@ -57,15 +53,7 @@ def command_cp(paths, recurs_version=None):
                     logging.error(f"cannot stat '{str(dispatch_path)}': No such file or directory")
                     continue
                 try:
-                    if dispatch_path.is_file():
-                        shutil.copy2(dispatch_path, destination_path)
-
-                    elif dispatch_path.is_dir():
-                        if not recurs_version:
-                            print(f"Неуказан -r для копирования директории'{dispatch_path}'")
-                            logging.error(f"-r not specified; omitting directory '{dispatch_path}'")
-                            continue
-                        shutil.copytree(dispatch_path, destination_path)
+                    shutil.move(dispatch_path, destination_path)
                 except Exception as err:
                     logging.error(err)
                     return False

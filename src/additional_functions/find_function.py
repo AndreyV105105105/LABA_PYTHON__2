@@ -5,6 +5,7 @@ from src.auxilary_functions.ls import ls
 from src.auxilary_functions.cd import cd
 from src.auxilary_functions.cat import cat
 from src.auxilary_functions.cp import cp
+from src.auxilary_functions.mv import mv
 
 
 def find_command(user_message):
@@ -23,7 +24,7 @@ def find_command(user_message):
             elif user_message[0] == 'cp':
                 cp(user_message[1:])
             elif user_message[0] == 'mv':
-                pass
+                mv(user_message[1:])
             elif user_message[0] == 'rm':
                 pass
             else:
