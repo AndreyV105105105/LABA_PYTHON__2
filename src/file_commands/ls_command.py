@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from src.file_features import get_file_size, get_file_time, get_file_permissions
+from src.additional_functions.functions_for_ls import get_file_size, get_file_time, get_file_permissions
 import os
 
 def command_ls(directory_path=None, full_version=False):
