@@ -1,9 +1,18 @@
 import logging
 from src.file_commands.cat_command import command_cat
 
+
 def cat(user_message):
+    """
+    Обрабатывает команду cat из пользовательского ввода.
+    Args:
+        user_message: Список аргументов команды (пути к файлам)
+    Returns:
+        bool: Всегда возвращает True (для единообразия интерфейса)
+    """
     directory_paths = None
-    """Обрабатываем аргументы функции"""
+
+    # Обрабатываем аргументы функции
     for cat_path in user_message:
         if directory_paths is None:
             directory_paths = [cat_path]
@@ -12,6 +21,7 @@ def cat(user_message):
 
     cat_path_answers = []
     if directory_paths is not None:
+        # Обрабатываем каждый переданный путь
         for directory_path in directory_paths:
             cat_answer = command_cat(directory_path)
             if cat_answer:
@@ -20,7 +30,7 @@ def cat(user_message):
         print('Ты не ввёл аргументы')
         logging.error('no many arguments')
 
-    """Выводим результат"""
+    # Выводим результат
     if cat_path_answers:
         for path in cat_path_answers:
             print(path)

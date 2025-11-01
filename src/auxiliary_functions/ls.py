@@ -1,13 +1,22 @@
-import logging
+
 from src.file_commands.ls_command import command_ls
 
-"""Обрабатываем функцию ls"""
+
 def ls(user_message):
+    """
+    Обрабатывает команду ls из пользовательского ввода.
+    Args:
+        user_message: Список аргументов команды (пути и флаги)
+    Returns:
+        bool: Всегда возвращает True
+    """
     directory_paths = None
     full_version = False
-    """Обрабатываем аргументы функции"""
+
+    # Обрабатываем аргументы функции
     for ls_path in user_message:
         if ls_path == '-l':
+            # Устанавливаем флаг подробного вывода
             full_version = True
         else:
             if directory_paths is None:
@@ -17,15 +26,17 @@ def ls(user_message):
 
     ls_answers = []
     if directory_paths is not None:
+        # Обрабатываем каждый переданный путь
         for directory_path in directory_paths:
             ls_answer = command_ls(directory_path, full_version)
             if ls_answer:
                 ls_answers.append(ls_answer)  # для каждого аргумента вызываем ф-ию
     else:
+        # Если аргументов нет - выводим содержимое текущей директории
         ls_answer = command_ls(directory_paths, full_version)
-        ls_answers.append(ls_answer)  # если аргумент 1
+        ls_answers.append(ls_answer)  # если аргумент l
 
-    """Выводим результат"""
+    # Выводим результат
     if ls_answers:
         if full_version:
             for path in ls_answers:
@@ -37,4 +48,5 @@ def ls(user_message):
                 for file in path:
                     print(file)
                 print()
+
     return True
