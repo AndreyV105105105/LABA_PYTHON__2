@@ -18,3 +18,4 @@ def cp(user_message):
     else:
         print('Ты не ввёл аргументы')
         logging.error('missing file operand')
+    return True

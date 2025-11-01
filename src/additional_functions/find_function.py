@@ -1,12 +1,12 @@
 import logging
 
 
-from src.auxilary_functions.ls import ls
-from src.auxilary_functions.cd import cd
-from src.auxilary_functions.cat import cat
-from src.auxilary_functions.cp import cp
-from src.auxilary_functions.mv import mv
-from src.auxilary_functions.rm import rm
+from src.auxiliary_functions.ls import ls
+from src.auxiliary_functions.cd import cd
+from src.auxiliary_functions.cat import cat
+from src.auxiliary_functions.cp import cp
+from src.auxiliary_functions.mv import mv
+from src.auxiliary_functions.rm import rm
 
 
 def find_command(user_message):

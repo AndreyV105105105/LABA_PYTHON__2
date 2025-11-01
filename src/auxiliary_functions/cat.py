@@ -4,7 +4,7 @@ from src.file_commands.cat_command import command_cat
 def cat(user_message):
     directory_paths = None
     """Обрабатываем аргументы функции"""
-    for cat_path in user_message[1:]:
+    for cat_path in user_message:
         if directory_paths is None:
             directory_paths = [cat_path]
         else:
